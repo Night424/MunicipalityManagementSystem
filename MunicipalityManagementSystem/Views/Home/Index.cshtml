@@ -1,8 +1,97 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MunicipalityManagementSystem.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Municipality Management Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <h1 class="display-4">Municipality Management Dashboard</h1>
+    
+    <div class="row mt-5">
+        <!-- Statistics Cards -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Citizens</h5>
+                    <h2 class="card-text">@Model.CitizenCount</h2>
+                    <a asp-controller="Citizen" asp-action="Index" class="text-white">View all</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Service Requests</h5>
+                    <h2 class="card-text">@Model.ServiceRequestCount</h2>
+                    <a asp-controller="ServiceRequest" asp-action="Index" class="text-white">View all</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Staff Members</h5>
+                    <h2 class="card-text">@Model.StaffCount</h2>
+                    <a asp-controller="Staff" asp-action="Index" class="text-white">View all</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Reports</h5>
+                    <h2 class="card-text">@Model.ReportCount</h2>
+                    <a asp-controller="Report" asp-action="Index" class="text-white">View all</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Service Requests -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>Recent Service Requests</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.RecentServiceRequests.Any())
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Citizen</th>
+                            <th>Service Type</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var request in Model.RecentServiceRequests)
+                        {
+                            <tr>
+                                <td>@request.RequestID</td>
+                                <td>@request.Citizen?.FullName</td>
+                                <td>@request.ServiceType</td>
+                                <td>@request.RequestDate.ToString("d")</td>
+                                <td>
+                                    <span class="badge @(request.Status == "Completed" ? "bg-success" : 
+                                                     request.Status == "Pending" ? "bg-warning" : "bg-danger")">
+                                        @request.Status
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No recent service requests found.</p>
+            }
+            <a asp-controller="ServiceRequest" asp-action="Index" class="btn btn-primary">View All Requests</a>
+        </div>
+    </div>
 </div>

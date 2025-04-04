@@ -1,31 +1,51 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MunicipalityManagementSystem.Models;
+using MunicipalityManagementSystem.Data;
+using Microsoft.EntityFrameworkCore;
+using MunicipalityManagementSystem.ViewModels;
 
-namespace MunicipalityManagementSystem.Controllers;
-
-public class HomeController : Controller
+namespace MunicipalityManagementSystem.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            // Get counts for dashboard statistics
+            var model = new DashboardViewModel
+            {
+                CitizenCount = _context.Citizens.Count(),
+                ServiceRequestCount = _context.ServiceRequests.Count(),
+                StaffCount = _context.Staff.Count(),
+                ReportCount = _context.Reports.Count(),
+                RecentServiceRequests = _context.ServiceRequests
+                    .Include(sr => sr.Citizen)
+                    .OrderByDescending(sr => sr.RequestDate)
+                    .Take(5)
+                    .ToList()
+            };
+            
+            return View(model);
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

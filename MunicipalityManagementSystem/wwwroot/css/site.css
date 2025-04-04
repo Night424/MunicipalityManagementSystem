@@ -1,3 +1,139 @@
+/* ===== DASHBOARD STYLES ===== */
+.dashboard {
+  padding: 2rem 0;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card .card-body {
+  padding: 1.5rem;
+}
+
+.stat-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .card-text {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .card-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.stat-card .card-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Card color variations */
+.stat-card.bg-primary {
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+}
+
+.stat-card.bg-success {
+  background: linear-gradient(135deg, #00b09b, #96c93d);
+}
+
+.stat-card.bg-info {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.stat-card.bg-warning {
+  background: linear-gradient(135deg, #f46b45, #eea849);
+}
+
+/* Recent requests table */
+.recent-requests {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.recent-requests .card-header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 1.5rem;
+}
+
+.recent-requests .card-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.recent-requests .table {
+  margin-bottom: 0;
+}
+
+.recent-requests .table th {
+  border-top: none;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Status badges */
+.badge {
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 50rem;
+}
+
+.badge.bg-success {
+  background-color: #2ecc71 !important;
+}
+
+.badge.bg-warning {
+  background-color: #f39c12 !important;
+}
+
+.badge.bg-danger {
+  background-color: #e74c3c !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stat-card {
+      margin-bottom: 1rem;
+  }
+  
+  .stat-card .card-text {
+      font-size: 1.5rem;
+  }
+}
+
 html {
   font-size: 14px;
 }
